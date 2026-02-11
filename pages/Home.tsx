@@ -100,7 +100,7 @@ const Home: React.FC = () => {
             </div>
           </div>
           
-          <div className="flex overflow-x-auto pb-8 gap-6 snap-x no-scrollbar">
+          <div className="flex overflow-x-auto pb-8 gap-6 snap-x">
             {REVIEWS.map(review => (
               <ReviewCard key={review.id} review={review} />
             ))}
