@@ -19,20 +19,15 @@ Keep answers concise (under 50 words unless detailed info is asked).
 `;
 
 export const sendMessageToGemini = async (history: {role: string, text: string}[], userMessage: string): Promise<string> => {
-  // Safely access environment variable to prevent crashes in strict browser environments
-  let apiKey: string | undefined;
-  try {
-    apiKey = process.env.API_KEY;
-  } catch (error) {
-    console.warn("Error accessing process.env:", error);
-  }
-  
+  // The API key is injected at build time via vite.config.ts
+  const apiKey = process.env.API_KEY;
+
   if (!apiKey) {
-    return "I'm currently offline (API Key missing). Please call us directly at +91 62831 17815.";
+    console.error("API Key is missing. Check Vercel Environment Variables.");
+    return "I'm currently offline (Config Error). Please call us directly at +91 62831 17815.";
   }
 
   try {
-    // Initialize inside function to ensure latest API key is used
     const ai = new GoogleGenAI({ apiKey });
     
     const chatHistory = history.map(msg => ({
@@ -50,7 +45,6 @@ export const sendMessageToGemini = async (history: {role: string, text: string}[
 
     const result = await chat.sendMessage({ message: userMessage });
     
-    // Correctly accessing the .text property as per SDK guidelines
     return result.text || "I'm sorry, I didn't catch that. Please call us for details.";
   } catch (error) {
     console.error("Gemini Error:", error);
