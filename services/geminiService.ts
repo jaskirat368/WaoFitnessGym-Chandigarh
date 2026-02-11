@@ -19,22 +19,17 @@ Keep answers concise (under 50 words unless detailed info is asked).
 `;
 
 export const sendMessageToGemini = async (history: {role: string, text: string}[], userMessage: string): Promise<string> => {
-  // The API key is injected at build time via vite.config.ts
-  const apiKey = process.env.API_KEY;
-
-  if (!apiKey) {
-    console.error("API Key is missing. Check Vercel Environment Variables.");
-    return "I'm currently offline (Config Error). Please call us directly at +91 62831 17815.";
-  }
-
   try {
-    const ai = new GoogleGenAI({ apiKey });
+    // Access the API key exclusively from process.env.API_KEY as per guidelines
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
+    // Map history to the format expected by the SDK
     const chatHistory = history.map(msg => ({
       role: msg.role === 'model' ? 'model' : 'user',
       parts: [{ text: msg.text }],
     }));
 
+    // Create chat session
     const chat = ai.chats.create({
       model: 'gemini-3-flash-preview',
       config: {
@@ -43,11 +38,13 @@ export const sendMessageToGemini = async (history: {role: string, text: string}[
       history: chatHistory
     });
 
+    // Send message
     const result = await chat.sendMessage({ message: userMessage });
     
+    // Return text
     return result.text || "I'm sorry, I didn't catch that. Please call us for details.";
   } catch (error) {
-    console.error("Gemini Error:", error);
+    console.error("Gemini API Error:", error);
     return "I'm having trouble connecting right now. Please call us at +91 62831 17815.";
   }
 };
