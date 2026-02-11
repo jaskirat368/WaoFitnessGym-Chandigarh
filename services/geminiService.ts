@@ -19,14 +19,20 @@ Keep answers concise (under 50 words unless detailed info is asked).
 `;
 
 export const sendMessageToGemini = async (history: {role: string, text: string}[], userMessage: string): Promise<string> => {
-  const apiKey = process.env.API_KEY;
+  // Safely access environment variable to prevent crashes in strict browser environments
+  let apiKey: string | undefined;
+  try {
+    apiKey = process.env.API_KEY;
+  } catch (error) {
+    console.warn("Error accessing process.env:", error);
+  }
   
   if (!apiKey) {
     return "I'm currently offline (API Key missing). Please call us directly at +91 62831 17815.";
   }
 
   try {
-    // Initialize inside function to ensure latest API key
+    // Initialize inside function to ensure latest API key is used
     const ai = new GoogleGenAI({ apiKey });
     
     const chatHistory = history.map(msg => ({
