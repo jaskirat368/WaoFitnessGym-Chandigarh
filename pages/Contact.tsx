@@ -1,6 +1,6 @@
 import React from 'react';
 import { BUSINESS_INFO } from '../constants';
-import { Phone, MapPin, Clock } from 'lucide-react';
+import { Phone, MapPin, Clock, Instagram } from 'lucide-react';
 import Button from '../components/Button';
 
 const Contact: React.FC = () => {
@@ -64,8 +64,18 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-            <div className="mt-12">
+            <div className="mt-12 space-y-4">
               <Button text="Navigate with Google Maps" onClick={() => window.open(BUSINESS_INFO.mapLink, '_blank')} className="w-full" />
+              
+              <a 
+                href="https://www.instagram.com/waofitness.asia?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center px-8 py-3 text-base font-bold uppercase tracking-wider transition-all duration-300 transform rounded-full hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white shadow-lg hover:shadow-[0_10px_20px_rgba(253,29,29,0.3)] group border border-white/10"
+              >
+                <Instagram size={20} className="mr-2 group-hover:scale-110 transition-transform" />
+                Follow on Instagram
+              </a>
             </div>
           </div>
 

@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.
   // The third parameter '' allows loading all env vars, including those without VITE_ prefix.
-  const env = loadEnv(mode, process.cwd(), '');
+  const env = loadEnv(mode, '.', '');
   
   // Prioritize VITE_GEMINI_API_KEY, fallback to GEMINI_API_KEY or API_KEY
   const apiKey = env.VITE_GEMINI_API_KEY || env.GEMINI_API_KEY || env.API_KEY;

@@ -5,8 +5,12 @@ const SYSTEM_INSTRUCTION = `
 You are the AI Assistant for ${BUSINESS_INFO.name}, the best gym in Chandigarh located at ${BUSINESS_INFO.address}.
 Your goal is to be helpful, energetic, and encouraging.
 You must encourage users to CALL ${BUSINESS_INFO.phone} or VISIT the gym.
-NEVER invent information. If you don't know, ask them to call.
-NEVER mention pricing, fees, or memberships costs. Say "Please call us for the latest packages."
+
+CORE RULES:
+1. NEVER invent information. If the user asks about something not in the context (like specific machines we haven't listed, or amenities like a pool/sauna if not mentioned), say: "I don't have the specific details for that right now. Please call us at ${BUSINESS_INFO.phone} so our team can assist you directly."
+2. NEVER mention specific pricing, fees, or membership costs. Say: "We have various flexible packages! Please call us at ${BUSINESS_INFO.phone} for the latest rates and offers."
+3. If you run into an error or don't understand, politely ask them to call.
+
 Context:
 - Rating: ${BUSINESS_INFO.rating} (${BUSINESS_INFO.reviewCount} reviews)
 - Hours: ${BUSINESS_INFO.hours}
@@ -22,7 +26,7 @@ export const sendMessageToGemini = async (history: {role: string, text: string}[
   // Check if key exists (injected via vite.config.ts)
   if (!process.env.API_KEY) {
     console.error("API Key missing. Please check Vercel Environment Variables (VITE_GEMINI_API_KEY).");
-    return "I'm currently offline (Configuration Error). Please call us at +91 62831 17815.";
+    return `I'm currently offline. Please call us at ${BUSINESS_INFO.phone}.`;
   }
 
   try {
@@ -43,9 +47,11 @@ export const sendMessageToGemini = async (history: {role: string, text: string}[
 
     const result = await chat.sendMessage({ message: userMessage });
     
-    return result.text || "I'm sorry, I didn't catch that. Please call us for details.";
+    // Fallback if the model returns an empty string (e.g., safety block)
+    return result.text || `Sorry, I can't access that specific information right now. You can get the details by contacting us at ${BUSINESS_INFO.phone}.`;
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "I'm having trouble connecting right now. Please call us at +91 62831 17815.";
+    // Polite fallback for actual API errors
+    return `Sorry, I can't access that information at the moment. Please contact us directly at ${BUSINESS_INFO.phone} for the best assistance.`;
   }
 };
