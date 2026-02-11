@@ -1,0 +1,53 @@
+import { GoogleGenAI } from "@google/genai";
+import { BUSINESS_INFO, PROGRAMS, FAQS } from '../constants';
+
+const SYSTEM_INSTRUCTION = `
+You are the AI Assistant for ${BUSINESS_INFO.name}, the best gym in Chandigarh located at ${BUSINESS_INFO.address}.
+Your goal is to be helpful, energetic, and encouraging.
+You must encourage users to CALL ${BUSINESS_INFO.phone} or VISIT the gym.
+NEVER invent information. If you don't know, ask them to call.
+NEVER mention pricing, fees, or memberships costs. Say "Please call us for the latest packages."
+Context:
+- Rating: ${BUSINESS_INFO.rating} (${BUSINESS_INFO.reviewCount} reviews)
+- Hours: ${BUSINESS_INFO.hours}
+- Programs: ${PROGRAMS.map(p => p.title).join(', ')}.
+- FAQs: ${FAQS.map(f => f.question + ' ' + f.answer).join(' ')}.
+- Special feature: Wheelchair accessible.
+
+Tone: Professional, motivational, friendly.
+Keep answers concise (under 50 words unless detailed info is asked).
+`;
+
+export const sendMessageToGemini = async (history: {role: string, text: string}[], userMessage: string): Promise<string> => {
+  const apiKey = process.env.API_KEY;
+  
+  if (!apiKey) {
+    return "I'm currently offline (API Key missing). Please call us directly at +91 62831 17815.";
+  }
+
+  try {
+    // Initialize inside function to ensure latest API key
+    const ai = new GoogleGenAI({ apiKey });
+    
+    const chatHistory = history.map(msg => ({
+      role: msg.role === 'model' ? 'model' : 'user',
+      parts: [{ text: msg.text }],
+    }));
+
+    const chat = ai.chats.create({
+      model: 'gemini-3-flash-preview',
+      config: {
+        systemInstruction: SYSTEM_INSTRUCTION,
+      },
+      history: chatHistory
+    });
+
+    const result = await chat.sendMessage({ message: userMessage });
+    
+    // Correctly accessing the .text property as per SDK guidelines
+    return result.text || "I'm sorry, I didn't catch that. Please call us for details.";
+  } catch (error) {
+    console.error("Gemini Error:", error);
+    return "I'm having trouble connecting right now. Please call us at +91 62831 17815.";
+  }
+};
