@@ -1,12 +1,11 @@
-// Reference to vite/client removed to fix "Cannot find type definition file" error.
-// /// <reference types="vite/client" />
+/// <reference types="vite/client" />
 
-declare var process: {
-  env: {
+declare namespace NodeJS {
+  interface ProcessEnv {
     API_KEY: string;
     [key: string]: string | undefined;
   }
-};
+}
 
 interface ImportMetaEnv {
   readonly VITE_GEMINI_API_KEY: string;
