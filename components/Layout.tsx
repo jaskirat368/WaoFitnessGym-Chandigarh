@@ -44,19 +44,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="container mx-auto px-4 flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="group relative z-50 flex items-center gap-1">
-             <span className="font-display font-black italic text-3xl tracking-tighter text-white">WAO</span>
-             <span className="font-display font-black italic text-3xl tracking-tighter text-brand-primary">FITNESS</span>
+             <span className="font-display font-black italic text-2xl lg:text-3xl tracking-tighter text-white transition-all">WAO</span>
+             <span className="font-display font-black italic text-2xl lg:text-3xl tracking-tighter text-brand-primary transition-all">FITNESS</span>
           </Link>
 
           {/* Desktop Menu - Glass Capsule */}
-          <nav className="hidden md:flex items-center gap-1 bg-white/5 p-1.5 rounded-full border border-white/5 backdrop-blur-md shadow-inner">
+          <nav className="hidden md:flex items-center gap-1 bg-white/5 p-1 lg:p-1.5 rounded-full border border-white/5 backdrop-blur-md shadow-inner transition-all">
             {navLinks.map((item) => {
               const isActive = location.pathname === item.path;
               return (
                 <Link 
                   key={item.name} 
                   to={item.path} 
-                  className={`relative px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wide transition-all duration-300 ${
+                  className={`relative px-3 py-1.5 lg:px-6 lg:py-2 rounded-full text-xs lg:text-sm font-bold uppercase tracking-wide transition-all duration-300 ${
                     isActive 
                       ? 'text-white bg-brand-primary shadow-[0_4px_14px_0_rgba(0,123,255,0.39)]' 
                       : 'text-gray-400 hover:text-white hover:bg-white/10'
@@ -70,15 +70,25 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-4">
+            {/* Full Button for Large Screens */}
             <a 
               href={`tel:${BUSINESS_INFO.phone.replace(/\s+/g, '')}`} 
-              className="group relative px-6 py-2.5 bg-brand-surface border border-white/10 rounded-xl overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:border-brand-primary/50 transition-all duration-300"
+              className="hidden lg:flex group relative px-6 py-2.5 bg-brand-surface border border-white/10 rounded-xl overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:border-brand-primary/50 transition-all duration-300"
             >
               <div className="absolute inset-0 bg-brand-primary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               <div className="relative flex items-center gap-2 text-sm font-bold text-white uppercase tracking-wider">
                 <Phone size={16} className="text-brand-primary group-hover:text-white transition-colors" />
                 <span>{BUSINESS_INFO.displayPhone}</span>
               </div>
+            </a>
+
+            {/* Icon Only Button for Medium Screens (Tablets) */}
+            <a 
+              href={`tel:${BUSINESS_INFO.phone.replace(/\s+/g, '')}`} 
+              className="lg:hidden flex items-center justify-center w-10 h-10 bg-brand-surface border border-white/10 rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)] text-brand-primary hover:bg-brand-primary hover:text-white transition-colors"
+              aria-label="Call Us"
+            >
+              <Phone size={18} />
             </a>
           </div>
 
