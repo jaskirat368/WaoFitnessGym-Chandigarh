@@ -3,7 +3,7 @@ import Hero from '../components/Hero';
 import ProgramCard from '../components/ProgramCard';
 import ReviewCard from '../components/ReviewCard';
 import Button from '../components/Button';
-import { PROGRAMS, REVIEWS } from '../constants';
+import { PROGRAMS, REVIEWS, BUSINESS_INFO } from '../constants';
 import { MapPin, Trophy, Users, ShieldCheck } from 'lucide-react';
 
 const Home: React.FC = () => {
@@ -121,7 +121,7 @@ const Home: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {/* Switched to variant="primary" (Electric Blue) to fix the orange look */}
             <Button text="Call +91 62831 17815" onClick={() => window.location.href='tel:+916283117815'} variant="primary" className="bg-white text-brand-primary hover:text-white hover:bg-black border-2 border-white" />
-            <Button text="Get Directions" onClick={() => window.open('https://maps.google.com/?q=SCO+34,+35,+36,+37,+Madhya+Marg,+Sector+9-D,+Chandigarh+160009', '_blank')} variant="outline" />
+            <Button text="Get Directions" onClick={() => window.open(BUSINESS_INFO.mapLink, '_blank')} variant="outline" />
           </div>
         </div>
       </section>

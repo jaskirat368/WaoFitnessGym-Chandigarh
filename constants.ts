@@ -5,7 +5,7 @@ export const BUSINESS_INFO = {
   phone: "+91 62831 17815",
   displayPhone: "+91 62831 17815",
   address: "SCO 34, 35, 36, 37, Madhya Marg, Sector 9-D, Chandigarh, Punjab, 160009",
-  mapLink: "https://maps.google.com/?q=SCO+34,+35,+36,+37,+Madhya+Marg,+Sector+9-D,+Chandigarh+160009",
+  mapLink: "https://maps.app.goo.gl/p81wq7f2oFiKuTCm6",
   established: "2022",
   rating: "4.8",
   reviewCount: "1155+",
