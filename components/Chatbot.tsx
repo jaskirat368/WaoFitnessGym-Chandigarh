@@ -94,7 +94,7 @@ const Chatbot: React.FC = () => {
                   }`}>
                     {msg.role === 'user' ? <User size={12} className="text-white" /> : <Bot size={12} className="text-brand-primary" />}
                   </div>
-                  <div className={`p-3 rounded-2xl text-[13px] leading-relaxed ${
+                  <div className={`p-3 rounded-2xl text-[13px] leading-relaxed whitespace-pre-wrap ${
                     msg.role === 'user' 
                       ? 'bg-brand-primary text-white rounded-tr-none shadow-md' 
                       : 'bg-brand-surface text-brand-text border border-white/5 rounded-tl-none'
