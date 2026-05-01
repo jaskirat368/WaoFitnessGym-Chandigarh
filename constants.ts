@@ -22,7 +22,7 @@ export const PROGRAMS: Program[] = [
     fullDescription: "Our Gym & Cardio program offers a comprehensive approach to improving cardiovascular health and overall stamina. We feature top-tier treadmills, ellipticals, stair masters, and cycles. Whether you are training for a marathon or just want to stay active, our zone is equipped for you.",
     benefits: ["Improved Heart Health", "Increased Stamina", "Calorie Burning", "Stress Reduction"],
     targetAudience: "Everyone from beginners to marathon runners.",
-    image: "https://d1qpnt4t1p05jk.cloudfront.net/wp-content/uploads/2025/10/27041021/image-20344-1024x683.png"
+    image: "https://i.ibb.co/bjhhdy2k/fitnesswoman-doing-cardio-gym-651396-759.jpg"
   },
   {
     id: "personal-training",
